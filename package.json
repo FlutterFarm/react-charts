@@ -26,6 +26,7 @@
     "react-bs-datatable": "^3.6.1",
     "react-chartjs-2": "^5.0.1",
     "react-charts-d3": "^2.4.1",
+    "react-d3-tree": "^3.4.2",
     "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-nested-table": "^1.0.1",
