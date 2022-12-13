@@ -35,17 +35,64 @@ const HomePage = () => {
     .get(localStorage.getItem("url"))
     .then((response) => {
       let data = response.data;
+      console.log("details");
+//      console.log(data.filter(chart => chart.type.indexOf('nestedTable') !== -1));
       console.log(data);
-      setPieData(data[0]);
-      setLineData(data[1]);
-      setAreaData(data[2]);
-      setDognutData(data[3]);
-      setPolarData(data[4]);
-      setVerticalBarData(data[5]);
-      setHorizontalBarData(data[6]);
-      setStackedData(data[7]);
-      setRadarData(data[8]);
-      setNestedData(data[9]);
+      if(data.find(chart => chart.type === 'pie')){
+        setPieData(data.find(chart => chart.type === 'pie'));
+      }
+      else{
+        setPieData([]);
+      }
+      if(data.find(chart => chart.type === 'line')){
+        setLineData(data.find(chart => chart.type === 'line'));
+      }
+      else{
+        setLineData([]);
+      }      
+      if(data.find(chart => chart.type === 'area')){
+        setAreaData(data.find(chart => chart.type === 'area'));
+      }
+      else{
+        setAreaData([]);
+      }            
+      if(data.find(chart => chart.type === 'donut')){
+        setDognutData(data.find(chart => chart.type === 'donut'));
+      }
+      else{
+        setDognutData([]);
+      }                  
+      if(data.find(chart => chart.type === 'polar')){
+        setPolarData(data.find(chart => chart.type === 'polar'));
+      }
+      else{
+        setPolarData([]);
+      }                        
+      if(data.find(chart => chart.type === 'verticalBar')){
+        setVerticalBarData(data.find(chart => chart.type === 'verticalBar'));
+      }
+      else{
+        setVerticalBarData([]);
+      }                              
+      if(data.find(chart => chart.type === 'HorizontalBar')){
+        setHorizontalBarData(data.find(chart => chart.type === 'HorizontalBar'));
+      }
+      else{
+        setHorizontalBarData([]);
+      }                                    
+      if(data.find(chart => chart.type === 'stacked')){
+        setStackedData(data.find(chart => chart.type === 'stacked'));
+      }
+      else{
+        setStackedData([]);
+      }                                          
+      if(data.find(chart => chart.type === 'radar')){
+        setRadarData(data.find(chart => chart.type === 'radar'));
+      }
+      else{
+        setRadarData([]);
+      }                                                
+      setNestedData(data.filter(chart => chart.type.indexOf('nestedTable') !== -1));
     })
     .catch((error) => {
       console.log(error);

@@ -40,8 +40,14 @@ function PieChartSection (props) {
                 <div className="card-body p-md-5 mx-md-4">                                                    
                     <p className="hero-head">
                         Pie chart
-                    </p>            
-                    <Pie data={PieChartdatas} style={{"height": "325px!important","width": "385px!important"}}/>                  
+                    </p>         
+                    {
+                     props.data === undefined ? (
+                      <h5>No Data Found</h5>
+                      ) : (
+                        <Pie data={PieChartdatas} style={{"height": "325px!important","width": "385px!important"}}/>                  
+                      )
+                    }                                                                                                       
                 </div>
             </div>            
         </div>
