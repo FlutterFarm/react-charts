@@ -1,0 +1,237 @@
+@font-face {
+    font-family: 'Roboto', sans-serif;
+    src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+  }
+  body{
+    font-family: Roboto;
+  }
+  header{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }  
+  .hero-section {
+    height: 410px;
+  }
+  .hero-head {
+    font-family: Roboto;
+    font-size: 1em;
+    font-weight: 600;
+    color: black;
+    line-height: 60px;
+  }
+  
+  .hero-sub-head {
+    font-family: Roboto;
+    font-size: 1.3em;
+    font-weight: 500;
+    color: black;
+  }
+  .hero-text {
+    font-family: Roboto;
+    font-size: 1.3em;
+    font-weight: 500;
+    color: black;  
+  }
+  @media (max-width: 576px) {
+    .hero-head {
+      font-size: 1.6em;
+      line-height: 45px;
+    }
+  
+    .hero-sub-head {
+      font-size: 1.1em;
+    }
+  
+    .hero-text {
+      font-size: 14px;
+      line-height: 25px;
+    }
+  }
+
+  .pt-7{
+    padding-top :6rem!important;
+  }
+  .hero-head_ts {
+    font-family: "Space Grotesk";
+    font-size: 2.5em;
+    font-weight: 800;
+    color: rgb(53, 53, 53);
+  }
+  
+  .hero-subhead_ts {
+    font-family: "Roboto";
+    font-size: 2.1em;
+    font-weight: 800;
+    color: #357e79;
+  }
+  
+  .hero_img_mod {
+    width: 400px;
+  }
+  
+  .opacity {
+    opacity: 0.8;
+  }
+  
+  .clients {
+    background-color: black;
+  }
+  
+  .clients_ts {
+    font-family: "Roboto";
+    font-size: 1.4em;
+    font-weight: 500;
+    color: rgb(114, 114, 114);
+  }
+  
+  .logo-size {
+    width: 8em;
+  }
+  
+  .industry-exp_head {
+    font-family: "Roboto";
+    font-size: 2.6em;
+    font-weight: 600;
+    color: rgb(65, 65, 65);
+  }
+  
+  .industry-exp_subhead {
+    font-family: "Dongle";
+    font-size: 2em;
+    font-weight: 400;
+    color: rgb(87, 87, 87);
+    margin-top: -20px;
+  }
+  
+  .industry-exp_ts {
+    font-family: Dongle;
+    font-weight: 500;
+    font-size: 1.6em;
+  }
+  
+  .section2_head {
+    font-family: "Roboto";
+    font-size: 2.4em;
+    font-weight: 800;
+    color: black;
+  }
+  
+  .section2_ts {
+    font-family: "Roboto";
+    font-size: 1em;
+    font-weight: 600;
+    color: rgb(73, 73, 73);
+    line-height: 38px;
+  }  
+    
+  .case_study_btn {
+    font-family: "Roboto";
+    font-size: 1.2em;
+    font-weight: 500;
+    background-color: rgb(75, 75, 75);
+    color: black;
+    border-radius: 2px;
+  }
+  
+  .case_study_btn:hover {
+    background-color: rgb(37, 37, 37);
+  }
+  
+  .controller_mod {
+    border: 0px;
+    background-color: rgba(245, 245, 245, 0);
+    opacity: 0.6;
+  }
+  
+  .controller_mod:hover {
+    border: 0px;
+    background-color: rgba(245, 245, 245, 0);
+    color: rgba(34, 0, 158, 0.849);
+    opacity: 0.9;
+  }
+  
+  .list-group {
+    background-color: transparent !important;
+    border: 0px !important;
+  }
+  
+  .list-group-item {
+    background-color: transparent !important;
+    border: 0px !important;
+  }
+  
+  .hero-text_ts {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(77, 77, 77);
+    line-height: 34px;
+  }
+  
+  @media (max-width: 992px) {
+    .disp_sm_hide_hero {
+      display: none;
+    }
+    .hero-head_ts {
+      font-size: 2.8em;
+    }
+    .hero-subhead_ts {
+      font-size: 2.8em;
+    }
+  }
+  
+  /***** Greater than Medium ******/
+  @media (min-width: 768px) {
+    .disp_sm_show {
+      display: none;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .disp_sm_show_hero {
+      display: none;
+    }
+  }
+  
+  /***** Only Medium ******/
+  
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .why_text_hide {
+      display: none;
+    }
+  }
+  
+  @media (min-width: 578px) and (max-width: 777px) {
+    .hero-section {
+        height: 475px;
+      }
+  }  
+  /***** Only Large ******/
+  
+  @media (min-width: 991.98px) and (max-width: 1200px) {
+    .why_text_hide {
+      display: none;
+    }
+  }
+  
+  /***** Extra large and greater ******/
+  @media (min-width: 1200px) {
+    .why_text_hide_top {
+      display: none;
+    }
+  }
+  
+  .highlight{
+    font-weight: 700;
+    font-size: 32.5px;
+    color: #44918b;
+  }
+  .choose-template-background{
+    background-repeat: no-repeat;
+    background-size: cover;    
+    background-position: center;    
+  }
+  .chartpadding{
+    padding-bottom: 15px;
+  }

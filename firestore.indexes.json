@@ -1,0 +1,163 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "unobi_bills",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "b_createdby",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_storecode",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_total",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "unobi_bills",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "b_createdby",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_total",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "unobi_bills",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "b_status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_number",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "unobi_bills",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "b_status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_storecode",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_number",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "unobi_bills",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "b_status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_storecode",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_total",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "unobi_bills",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "b_to",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_status",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "unobi_bills",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "b_to",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "b_status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "bill_number",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "unobi_orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "i_code",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "i_status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "i_number",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "unobi_orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "i_status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "i_storecode",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "i_number",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
