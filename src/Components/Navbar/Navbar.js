@@ -33,10 +33,10 @@ function Navbar(props) {
             </div>
             <ul className="sidebar-nav">
                 <li className={homeActive}>
-                    <a href="/"><i className="fa fa-home"></i>Home</a>
+                    <a href="/"><img src="/assets/images/icons/home.svg"></img></a>
                 </li>
                 <li className={settingsActive}>
-                    <a href="/settings"><i className="fa fa-cog"></i>Settings</a>
+                    <a href="/settings"><img src="/assets/images/icons/settings.svg"></img></a>
                 </li>                
             </ul>
         </aside>

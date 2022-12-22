@@ -35,7 +35,7 @@ function NestedTableSection (props) {
         height:"311px",
         layout: "fitColumns",
         dataTree: true,
-        dataTreeStartExpanded: false,
+        dataTreeStartExpanded: true,
         dataTreeElementColumn: "name"
       }; 
       const fetchPieData = useCallback(async () => {

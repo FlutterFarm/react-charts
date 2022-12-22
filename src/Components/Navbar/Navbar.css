@@ -58,8 +58,8 @@ a:focus {
   list-style: none;
 }
 .sidebar-nav > li {
-  text-indent: 10px;
-  line-height: 42px;
+  text-indent: 3px;
+  line-height: 60px;
 }
 .sidebar-nav > li a {
   display: block;
@@ -72,7 +72,7 @@ a:focus {
 .sidebar-nav > li.active > a {
   text-decoration: none;
   color: #fff;
-  background: #F8BE12;
+  background-color: #fff;
 }
 .sidebar-nav > li > a i.fa {
   font-size: 24px;
@@ -115,19 +115,19 @@ a:focus {
 
 @media (min-width: 992px) {
   #wrapper {
-    padding-left: 250px;
+    padding-left: 44px;
   }
   
   #wrapper.toggled {
-    padding-left: 60px;
+    padding-left: 44px;
   }
 
   #sidebar-wrapper {
-    width: 250px;
+    width: 44px;
   }
   
   #wrapper.toggled #sidebar-wrapper {
-    width: 60px;
+    width: 44px;
   }
   
   #wrapper.toggled #navbar-wrapper {
@@ -145,7 +145,7 @@ a:focus {
   }
 
   #wrapper.toggled {
-    padding-left: 60px;
+    padding-left: 44px;
   }
 
   #content-wrapper {
@@ -162,11 +162,11 @@ a:focus {
 
 @media (min-width: 768px) and (max-width: 991px) {
   #wrapper {
-    padding-left: 60px;
+    padding-left: 44px;
   }
 
   #sidebar-wrapper {
-    width: 60px;
+    width: 44px;
   }
   
 #wrapper.toggled #navbar-wrapper {
@@ -209,7 +209,7 @@ a:focus {
   }
 
   #wrapper.toggled #sidebar-wrapper {
-    width: 250px;
+    width: 44px;
   }
   #wrapper.toggled #navbar-wrapper {
     position: absolute;
@@ -226,7 +226,7 @@ a:focus {
   }
 
   #wrapper.toggled {
-    padding-left: 250px;
+    padding-left: 44px;
   }
 
   #content-wrapper {

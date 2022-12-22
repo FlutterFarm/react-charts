@@ -36,22 +36,28 @@ function BarChartSection (props) {
 //        fetchLineData();
       }, []);    
     return(
-        <div className="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 text-center chartpadding d-flex">
-            <div className="card rounded-3 text-black">
-                <div className="card-body p-md-5 mx-md-4">                                                                
-                    <p className="hero-head">
-                        Bar chart
-                    </p>            
-                    {
-                     labels === undefined || datasets === undefined ? (
-                      <h5>No Data Found</h5>
-                      ) : (
-                        <Bar options={options} data={BarChartData} />                  
-                      )
-                    }
+      <div className="card card-raised chartpadding accordion-item">
+        <div className="card-header bg-transparent">
+            <div className="d-flex justify-content-between align-items-center accordion-header">
+                <div className="me-4">
+                    <h2 className="card-title mb-0">Vertical Bar</h2>
                 </div>
             </div>
         </div>
+        <div className="card-body text-center">
+            <div className="row gx-4">
+                <div className="col-12 col-xxl-10">
+                {
+                  labels === undefined || datasets === undefined ? (
+                  <h5>No Data Found</h5>
+                  ) : (
+                    <Bar options={options} data={BarChartData} />                  
+                  )
+                }
+                </div>
+            </div>
+        </div>
+      </div>            
     )
 }
 export default BarChartSection;
