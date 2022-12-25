@@ -16,6 +16,8 @@ import NestedTableSection from "../ChartPage/NestedTableSection";
 import TreeChartSection from "../ChartPage/TreeChartSection";
 import ProgressBarSection from "../ChartPage/ProgressBar";
 import ValidateFunctions from "../../Functions/ValidateFunctions";
+import ERD from "../../Components/ERD";
+import TreeData from "../../Data/TreeData";
 import { Modal } from "react-bootstrap";
 
 import "./HomePage.css";
@@ -51,6 +53,7 @@ const HomePage = () => {
   const onTop = () => {
     window.scrollTo(0, 0);
   };
+  
   const fetchData = () => {
     let url = localStorage.getItem("url");
     let uname = localStorage.getItem("uname");
@@ -258,6 +261,7 @@ const HomePage = () => {
                   }                                                                  
 {/*}                  <ProgressBarSection data={progressBar}></ProgressBarSection> */}
                 </div>
+                <ERD schema={TreeData} />
                 <NestedTableSection data={nestedData}></NestedTableSection>
 
                 <TreeChartSection data={treeData}></TreeChartSection>
@@ -295,7 +299,7 @@ const HomePage = () => {
                     </div>
                     <hr />
                     <div className="row pt-4 px-5 form-ts-mod">
-                        <div className="col-md-4">
+                        <div className="col-md-4 col-6">
                           <div className="custom-control custom-checkbox image-checkbox">
                             <input className="custom-control-input"
                                 type="checkbox"
@@ -312,7 +316,7 @@ const HomePage = () => {
                               </label>
                           </div>
                         </div>                                                                                                                                          
-                        <div className="col-md-4">
+                        <div className="col-md-4 col-6">
                           <div className="custom-control custom-checkbox image-checkbox">
                             <input className="custom-control-input"
                                 type="checkbox"
@@ -329,7 +333,7 @@ const HomePage = () => {
                               </label>
                           </div>
                         </div>     
-                        <div className="col-md-4">
+                        <div className="col-md-4 col-6">
                           <div className="custom-control custom-checkbox image-checkbox">
                             <input className="custom-control-input"
                                 type="checkbox"
@@ -346,7 +350,7 @@ const HomePage = () => {
                               </label>
                           </div>
                         </div>                                                                                                                                                                                                                                                                                                                               
-                        <div className="col-md-4">
+                        <div className="col-md-4 col-6">
                           <div className="custom-control custom-checkbox image-checkbox">
                             <input className="custom-control-input"
                                 type="checkbox"
@@ -363,7 +367,7 @@ const HomePage = () => {
                               </label>
                           </div>
                         </div>                                                                                                                      
-                        <div className="col-md-4">
+                        <div className="col-md-4 col-6">
                           <div className="custom-control custom-checkbox image-checkbox">
                             <input className="custom-control-input"
                                 type="checkbox"
@@ -380,7 +384,7 @@ const HomePage = () => {
                               </label>
                           </div>
                         </div>                        
-                        <div className="col-md-4">
+                        <div className="col-md-4 col-6">
                           <div className="custom-control custom-checkbox image-checkbox">
                             <input className="custom-control-input"
                                 type="checkbox"
@@ -397,7 +401,7 @@ const HomePage = () => {
                               </label>
                           </div>
                         </div>                                                
-                        <div className="col-md-4">
+                        <div className="col-md-4 col-6">
                           <div className="custom-control custom-checkbox image-checkbox">
                             <input className="custom-control-input"
                                 type="checkbox"
@@ -414,7 +418,7 @@ const HomePage = () => {
                               </label>
                           </div>
                         </div>                                                                        
-                        <div className="col-md-4">
+                        <div className="col-md-4 col-6">
                           <div className="custom-control custom-checkbox image-checkbox">
                             <input className="custom-control-input"
                                 type="checkbox"
