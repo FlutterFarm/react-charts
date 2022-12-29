@@ -16,11 +16,13 @@ import NestedTableSection from "../ChartPage/NestedTableSection";
 import TreeChartSection from "../ChartPage/TreeChartSection";
 import ProgressBarSection from "../ChartPage/ProgressBar";
 import ValidateFunctions from "../../Functions/ValidateFunctions";
-import ERD from "../../Components/ERD";
+//import ERD from "../../Components/ERD";
 import TreeData from "../../Data/TreeData";
 import { Modal } from "react-bootstrap";
+import $ from 'jquery'
 
 import "./HomePage.css";
+import './assets/css/jquery.flowchart.css';
 
 
 const HomePage = () => {    
@@ -53,7 +55,6 @@ const HomePage = () => {
   const onTop = () => {
     window.scrollTo(0, 0);
   };
-  
   const fetchData = () => {
     let url = localStorage.getItem("url");
     let uname = localStorage.getItem("uname");
@@ -261,7 +262,48 @@ const HomePage = () => {
                   }                                                                  
 {/*}                  <ProgressBarSection data={progressBar}></ProgressBarSection> */}
                 </div>
-                <ERD schema={TreeData} />
+                  <div id="chart_container">
+                    <div className="flowchart-example-container" id="flowchartworkspace"></div>
+                  </div>
+                  <div className="draggable_operators">
+                    <div className="draggable_operators_label">
+                    </div>
+                    <div className="draggable_operators_divs">
+                    </div>
+                  </div>
+                  <div id="operator_properties" style={{"display": "block"}}>
+                    <label for="operator_title">Operator's title: <input className="form-control create-button" id="operator_title" type="text"/>
+                    Background color: <input className="form-control create-button" id="operator_background_color" type="color"/>
+{/*                    Font color: <input className="form-control create-button" id="operator_font_color" type="color"/>  */}
+                    </label> 
+                  </div>
+                  <div id="link_properties" style={{"display": "block"}}>
+                    <label for="link_color">
+                        Link's color: <input className="form-control create-button" id="link_color" type="color"/>
+                        Link width: <select className="form-control create-button" id="link_width">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>                                                                                                                                                                                                                                          
+                        </select>
+                    </label>
+                  </div>
+                  <button className="create_operator btn btn-success create-button">Create operator</button>&nbsp;&nbsp;
+                	<button className="delete_selected_button btn btn-success create-button">Delete selected operator / link</button>&nbsp;&nbsp;
+                  	<button className="get_data btn btn-success create-button" id="get_data">Get data</button>&nbsp;&nbsp;
+                  	<button className="set_data btn btn-success create-button" id="set_data">Set data</button>&nbsp;&nbsp;
+                  	<button id="save_local" className="btn btn-success create-button">Save to local storage</button>&nbsp;&nbsp;
+                  	<button id="load_local" className="btn btn-success create-button">Load from local storage</button>&nbsp;&nbsp;
+                  	<div>
+                  		<textarea id="flowchart_data" className="form-control create-button"></textarea>
+                  	</div>                      
+{/*                <ERD schema={TreeData} /> */}
                 <NestedTableSection data={nestedData}></NestedTableSection>
 
                 <TreeChartSection data={treeData}></TreeChartSection>

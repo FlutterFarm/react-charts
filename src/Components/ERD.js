@@ -68,6 +68,9 @@ function ERD(props) {
     }
 
     let node = new DefaultNodeModel(table.table_name, "rgb(0,192,255)");
+    node.addListener({
+      selectionChanged: () => { console.log("selectionChanged") }
+   });    
     tables[table_key] = node;
 
     //Add the Columns for the ports
@@ -133,36 +136,36 @@ function ERD(props) {
       links.push(portFrom.outPort.link(portTo.inPort));
     }
   }
-
+  console.log(links);
+  console.log(nodes);
   //4) add the models to the root graph
   model.addAll(...nodes, ...links);
-
+  for (let table of schema) {
+    for (let fk of table.foreign_keys) {
+      let fromTableKey = getTableKey(table);
+      let toTableKey = fk.toTableSchema + "." + fk.toTable;
+      let fromColumnKey = fromTableKey + "." + fk.fromColumn;
+      let toColumnKey = toTableKey + "." + fk.toColumn;
+      let portFrom = columns[fromColumnKey];
+      let portTo = columns[toColumnKey];
+      console.log("-------------");
+      console.log(fromTableKey);
+      console.log(toTableKey);
+      console.log(fromColumnKey);
+      console.log(toColumnKey);
+      console.log(portFrom);
+      console.log(portTo);
+      console.log("+++++++++++");
+    }
+  }
+//  document.getElementById("treedata").innerHTML = x;
   //5) load model into engine
   let distributedModel = getDistributedModel(engine, model); //distribures model
+  console.log(distributedModel);
   engine.setDiagramModel(distributedModel);
-
+  console.log(engine);
   //6) render the diagram!
 
-  const renderFolderItems = (TreeData) => {
-    return (
-        <ul>
-          {TreeData.map((item, index) => {
-            if (item.type === "file") {
-              return <li key={index}>{item.name}</li>;
-            }
-            return (
-              <li key={index}>
-                {item.name}
-                {renderFolderItems(item.children)}
-              </li>
-            );
-          })}
-        </ul>
-    );
-  };
-  const searchInput = '';
-  const onChange = (e) => {
-  };
   const dataChange = (val,index) => {
     setmModalDisplay(true);   
     setData(val); 
@@ -192,17 +195,6 @@ function ERD(props) {
     console.log(subIndex);
     setmModalDisplay(false);
   }
-  const filterByQuery = (folderSystem, query) => {
-    return folderSystem.reduce((searchResults, item) => {
-      if (item.type === "file" && item.name.includes(query)) {
-        return [...searchResults, item.name];
-      } else if (item.type === "dir") {
-        return [...searchResults, ...filterByQuery(item.children, query)];
-      }
-      return searchResults;
-    }, []);
-  };
-  const filteredFolderSystem = filterByQuery(TreeFolderData, searchInput);
   return (
     <React.Fragment>
         <div className="col-6">
@@ -218,25 +210,28 @@ function ERD(props) {
         </div>
         <div className="col-6">
         <div className="folders">
+        <div id="treedata"></div>
       {datas.map((folder, i) => {
-        // Get the folder in array
         const currentFolder = folder;
-        // Is the folder opened or not
-        const isFolderActive = [1,4];
         return (
             <div className="folder">
               <ul>
-                <li onClick={e => dataChange(currentFolder.table_name,i)}>
-                  <i className="fa fa-folder folder-icon"  />
-                      <span className="folder-name">{currentFolder.table_name}</span>
+                <li>
+                  <i className="fa fa-folder folder-icon" data-bs-toggle="collapse" href={'#' + currentFolder.table_name} role="button" aria-expanded="false" aria-controls={currentFolder.table_name}  />
+                      <span className="folder-name">{currentFolder.table_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <i className="fa fa-pencil" onClick={e => dataChange(currentFolder.table_name,i)}></i>&nbsp;&nbsp;
+                      <i className="fa fa-trash"></i>
                 </li>
+                
                 {
                     folder['foreign_keys'].map((subfolder,j) => {
                       return (
                         <ul key={subfolder.toTable}>
-                            <li onClick={e => dataChangesub(subfolder.toTable,i,j)}>
-                                <i className="fa fa-folder folder-icon" />
-                                    <span className="folder-name">{subfolder.toTable}</span>
+                            <li className="collapse" id={currentFolder.table_name}>
+                                <i className="fa fa-folder folder-icon"/>
+                                    <span className="folder-name">{subfolder.toTable}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <i className="fa fa-pencil" onClick={e => dataChangesub(subfolder.toTable,i,j)}></i>&nbsp;&nbsp;
+                                      <i className="fa fa-trash"></i>                                      
                             </li>
                         </ul>
                       );
