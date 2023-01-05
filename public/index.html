@@ -53,18 +53,135 @@
     <script src="./assets/js/jquery.flowchart.js"></script>
     <script>
     $(document).ready(function() {
+      var i=1;  
+      $('#project_name_tag').click(function(){
+        $('#exampleModal').modal('show');                
+        $('#project_modal').show();      
+        $('#project_operator').hide();          
+        $('#project_link').hide();
+      });
+      $('#project_operator_tag').click(function(){
+        $('#exampleModal').modal('show');                
+        $('#project_modal').hide();      
+        $('#project_operator').show();       
+        $('#project_link').hide();        
+        $('#operator_submit').show();
+        $('#operator_update').hide();
+        $('#operator_delete').hide();        
+        $('#dynamic_field_input_show').show();
+        $('#dynamic_field_output_show').show();
+        $('#dynamic_field_input_hide').hide();
+        $('#dynamic_field_output_hide').hide();                  
+        $('#add_operator_field').show();
+        $('#update_operator_field').hide();
+      });      
+      $('#add').click(function(){  
+           i++;  
+           $('#dynamic_field').append('<tr id="row'+i+'"><td><input type="text" id="input_' + i + '"name="input[]" placeholder="input" class="form-control name_list" /></td><td><input type="color" name="input[]" id="input_fontcolor_'+i+'" placeholder="input" className="form-control name_list" /></td><td><select id="input_alignment_'+i+'" className="form-control"><option value="center">Center</option><option value="right">Right</option><option value="left">Left</option></select></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger-color btn_remove">X</button></td></tr><br></br>');  
+      });  
+      $(document).on('click', '.btn_remove', function(){  
+           var button_id = $(this).attr("id");   
+           $('#row'+button_id+'').remove();  
+      });  
+      var j=1;  
+      $('#addoutput').click(function(){  
+           j++;  
+           $('#dynamic_field_output').append('<tr id="rowoutput'+j+'"><td><input type="text" id="output_' + j + '" name="output[]" placeholder="output" class="form-control name_list" /></td><td><input type="color" name="input[]" id="output_fontcolor_'+j+'" placeholder="input" className="form-control name_list" /></td><td><select id="output_alignment_'+j+'" className="form-control"><option value="center">Center</option><option value="right">Right</option><option value="left">Left</option></select></td><td><button type="button" name="removeoutput" id="'+j+'" class="btn btn-danger-color btn_remove">X</button></td></tr><br></br>');  
+      });  
+      $(document).on('click', '.btn_remove', function(){  
+         var button_id = $(this).attr("id");   
+         $('#rowoutput'+button_id+'').remove();  
+      });  
+      $(document).on('click', '.update-input-delete', function(){  
+           var button_id = $(this).attr("id");   
+           var data = $flowchart.flowchart('getData');
+           console.log("---------");
+           console.log(data);           
+           var opid = $('#update_input_operatorid'+button_id).val();
+           var inid = $('#update_input_field'+button_id).val()
+           console.log(opid);
+           console.log(inid);           
+             let toOperators = Object.keys(data.links).map(key =>
+             data.links[key].toConnector == inid && data.links[key].toOperator == opid);             
+              let toarr = toOperators;
+              console.log(toarr);
+              if (toarr.indexOf(true) !== -1) {
+                console.log("true is present in the array");
+                alert("Remove all link in the input");
+              } else {
+                console.log("true is not present in the array");
+                let datan = delete data['operators'][opid]['properties']['inputs'][inid];
+                console.log(datan);
+                $flowchart.flowchart('setData', data);
+                $('#row_hide'+button_id+'').remove();  
+              }           
+              console.log("---------");              
+      });        
+      $(document).on('click', '.update-output-delete', function(){  
+           var button_id = $(this).attr("id");   
+           var data = $flowchart.flowchart('getData');
+           console.log("---------");           
+           console.log(data);           
+           var opid = $('#update_output_operatorid'+button_id).val();
+           var inid = $('#update_output_field'+button_id).val()
+           console.log(opid);
+           console.log(inid);
+           let fromOperators = Object.keys(data.links).map(key =>
+             data.links[key].fromConnector == inid && data.links[key].fromOperator == opid);
+              let arr = fromOperators;
+              console.log(arr);
+              if (arr.indexOf(true) !== -1) {
+                console.log("true is present in the array");
+                alert("Remove all link in the output");
+              } else {
+                console.log("true is not present in the array");           
+                var datas = $flowchart.flowchart('getData');                
+                let datan = delete datas['operators'][opid]['properties']['outputs'][inid];
+                 console.log(datas);
+                 $flowchart.flowchart('setData', datas);
+                 $('#row_hide_output'+button_id+'').remove();  
+              }
+              console.log("---------");              
+      });              
+
+      $('#operator_submit').click(function(){       
+        let validation = '';
+        if($('#operator_title_add').val() == ''){
+          validation = 'empty';
+        }
+        for (let k = 1; k <= i; k++) {
+          const key = "input_" + k;
+          if($("#input_" + k).val() == ''){
+            validation = 'empty'
+          }
+        }
+        for (let l = 1; l <= j; l++) {
+          const keys = "output_" + l;
+          if($("#output_" + l).val() == ''){
+            validation = 'empty'
+          }          
+        }        
+        if(validation == "empty"){
+          alert("Please fill all details");
+        }
+        else{
+          $('.create_operator').click();        
+          $('#exampleModal').modal('hide');        
+        }
+      });  
+      $('#operator_delete').click(function(){     
+          console.log("clicked");        
+          $('.delete_selected_button').click();    
+          $('#exampleModal').modal('hide');                              
+      });          
+      $('#link_delete').click(function(){     
+          console.log("clicked");        
+          $('.delete_selected_button').click();    
+          $('#exampleModal').modal('hide');                              
+      });                
+
       var $flowchart = $('#flowchartworkspace');
       var $container = $flowchart.parent();
-  
-  
-      // Apply the plugin on a standard, empty div...
-      $flowchart.flowchart({
-        data: defaultFlowchartData,
-        defaultSelectedLinkColor: '#000055',
-        grid: 10,
-        multipleLinksOnInput: true,
-        multipleLinksOnOutput: true
-      });
   
   
       function getOperatorData($element) {
@@ -98,21 +215,60 @@
       //-----------------------------------------
       //--- operator and link properties
       //--- start
+      var $projectName = $('#project_title');
+      var $title_submit = $('#title_submit');
       var $operatorProperties = $('#operator_properties');
       $operatorProperties.hide();
       var $linkProperties = $('#link_properties');
       $linkProperties.hide();
       var $operatorTitle = $('#operator_title');
       var $linkColor = $('#link_color');
-      var $operatorBackgroundColor = $('#operator_background_color');
-      var $operatorFontColor = $('#operator_font_color');
+      var $operatorBackgroundColor = $('#background-color');
+      var $operatorAlignment = $('#alignment');
+      var $operatorFontColor = $('#font-color');
+//      var $operatorFontColor = $('#operator_font_color');
       var $linkWidth = $('#link_width');
-  
+      let input_update = 0;
+      let output_update = 0;
       $flowchart.flowchart({
         onOperatorSelect: function(operatorId) {
+          input_update = 0; 
+          output_update = 0;       
+          $('#dynamic_field_table_input').html('');
+          $('#dynamic_field_table_output').html('');
+          console.log('clicked');
           $operatorProperties.show();
+          $('#exampleModal').modal('show');
+          $('#project_modal').hide();      
+          $('#project_operator').show();  
+          $('#project_link').hide();       
+          $('#add_operator_field').hide();
+          $('#update_operator_field').show();                               
           $operatorTitle.val($flowchart.flowchart('getOperatorTitle', operatorId));
           $operatorBackgroundColor.val($flowchart.flowchart('getOperatorBackgroundColor', operatorId))
+          $operatorAlignment.val($flowchart.flowchart('getOperatorAlignment', operatorId));
+          $operatorFontColor.val($flowchart.flowchart('getOperatorFontColor', operatorId));
+          $('#operator_submit').hide();
+          $('#operator_update').show();          
+          $('#operator_delete').show();       
+          $('#dynamic_field_input_show').hide();
+          $('#dynamic_field_output_show').hide();                       
+          $('#dynamic_field_input_hide').show();
+          $('#dynamic_field_output_hide').show();          
+          var data = $flowchart.flowchart('getData');
+          console.log(data['operators'][operatorId]['properties']['inputs']);
+          for(let key in data['operators'][operatorId]['properties']['inputs']) {
+            console.log(key);
+            $('#dynamic_field_table_input').append('<tr id="row_hide'+input_update+'"><td><input type="hidden" value="' +operatorId + '" id="update_input_operatorid'+input_update+'" /><input type="hidden" value="' + key + '" id="update_input_field'+input_update+'" /><input type="text" data-custom-attribute="'+operatorId+'" data-custom-attribute2="'+key+'" id="input_update' + input_update + '"  name="input[]" value="' + data['operators'][operatorId]['properties']['inputs'][key]['label'] + '" placeholder="input" class="form-control name_list"  /></td><td><input type="color" data-custom-attributes="'+operatorId+'" data-custom-attribute2s="'+key+'" name="input[]" id="input_update_fontcolor_'+input_update+'" value="' + data['operators'][operatorId]['properties']['inputs'][key]['fontcolor'] + '" placeholder="input" className="form-control name_list" /></td><td><select data-custom-attributes="'+operatorId+'" data-custom-attribute2s="'+key+'" id="input_update_alignment_'+input_update+'" className="form-control"><option value="center">Center</option><option value="right">Right</option><option value="left">Left</option></select></td><td><button type="button" name="remove" class="btn btn-danger-color update-input-delete" id="'+input_update+'">X</button></td></tr><br></br>');              
+            $("#input_update_alignment_"+input_update).val(data['operators'][operatorId]['properties']['inputs'][key]['alignment'])
+            input_update++;
+          }
+          for(let keys in data['operators'][operatorId]['properties']['outputs']) {
+            console.log(keys);
+            $('#dynamic_field_table_output').append('<tr id="row_hide_output'+output_update+'"><td><input type="hidden" value="' +operatorId + '" id="update_output_operatorid'+output_update+'" /><input type="hidden" value="' + keys + '" id="update_output_field'+output_update+'" /><input type="text" data-custom-attribute="'+operatorId+'" data-custom-attribute2="'+keys+'" id="output_update' + output_update + '" name="output[]" value="' + data['operators'][operatorId]['properties']['outputs'][keys]['label'] + '" placeholder="input" class="form-control name_list"  /></td><td><input type="color" data-custom-attributes="'+operatorId+'" data-custom-attribute2s="'+keys+'" name="input[]" id="output_update_fontcolor_'+output_update+'" value="' + data['operators'][operatorId]['properties']['outputs'][keys]['fontcolor'] + '" placeholder="input" className="form-control name_list" /></td><td><select data-custom-attributes="'+operatorId+'" data-custom-attribute2s="'+keys+'" id="output_update_alignment_'+output_update+'" className="form-control"><option value="center">Center</option><option value="right">Right</option><option value="left">Left</option></select></td><td><button type="button" name="remove" class="btn btn-danger-color update-output-delete" id="'+output_update+'">X</button></td></tr><br></br>');              
+            $("#output_update_alignment_"+output_update).val(data['operators'][operatorId]['properties']['outputs'][keys]['alignment'])
+            output_update++;
+          }          
           return true;
         },
         onOperatorUnselect: function() {
@@ -121,21 +277,142 @@
         },
         onLinkSelect: function(linkId) {
           $linkProperties.show();
+          $('#exampleModal').modal('show');
+          $('#project_modal').hide();      
+          $('#project_operator').hide();                    
+          $('#project_link').show();
           $linkColor.val($flowchart.flowchart('getLinkMainColor', linkId));
           return true;
         },
+        onAfterChange: function(operator_data_change) {
+          console.log("data changed");
+          console.log(operator_data_change);
+          var data = $flowchart.flowchart('getData');
+          console.log(data);
+          treeview(data);          
+          console.log("data changed_end");          
+          return true;
+        },        
         onLinkUnselect: function() {
           $linkProperties.hide();
           return true;
         }
       });
-  
+      $(document).on('keyup', '#dynamic_field_table_input', function() {
+        var textboxIds = $('#dynamic_field_table_input').find('input[type="text"]').map(function() {
+          return this.id;
+        }).get();
+        for(i=0;i<textboxIds.length;i++){
+          let opeid = $('#'+textboxIds[i]).data('custom-attribute');
+          let inpid = $('#'+textboxIds[i]).data('custom-attribute2');
+          let vals = $('#'+textboxIds[i]).val();
+          console.log(opeid);
+          console.log(inpid);
+          console.log(vals);
+          var data = $flowchart.flowchart('getData');
+          data['operators'][opeid]['properties']['inputs'][inpid]['label'] = vals;
+          $flowchart.flowchart('setData', data);          
+        }
+        console.log(textboxIds);
+      });      
+      $(document).on('change', '#dynamic_field_table_input', function() {
+        var textboxIds = $('#dynamic_field_table_input').find('input[type="color"]').map(function() {
+          return this.id;
+        }).get();
+        for(i=0;i<textboxIds.length;i++){
+          let opeid = $('#'+textboxIds[i]).data('custom-attributes');
+          let inpid = $('#'+textboxIds[i]).data('custom-attribute2s');
+          let vals = $('#'+textboxIds[i]).val();
+          console.log(opeid);
+          console.log(inpid);
+          console.log(vals);
+          var data = $flowchart.flowchart('getData');
+          data['operators'][opeid]['properties']['inputs'][inpid]['fontcolor'] = vals;
+          $flowchart.flowchart('setData', data);          
+        }
+        console.log(textboxIds);
+      });      
+      $(document).on('change', '#dynamic_field_table_input', function() {
+        var textboxIds = $('#dynamic_field_table_input').find('select').map(function() {
+          return this.id;
+        }).get();
+        for(i=0;i<textboxIds.length;i++){
+          let opeid = $('#'+textboxIds[i]).data('custom-attributes');
+          let inpid = $('#'+textboxIds[i]).data('custom-attribute2s');
+          let vals = $('#'+textboxIds[i]).val();
+          console.log(opeid);
+          console.log(inpid);
+          console.log(vals);
+          var data = $flowchart.flowchart('getData');
+          data['operators'][opeid]['properties']['inputs'][inpid]['alignment'] = vals;
+          $flowchart.flowchart('setData', data);          
+        }
+        console.log(textboxIds);
+      });      
+      $(document).on('keyup', '#dynamic_field_table_output', function() {
+        var textboxIds = $('#dynamic_field_table_output').find('input[type="text"]').map(function() {
+          return this.id;
+        }).get();
+        for(i=0;i<textboxIds.length;i++){
+          let opeid = $('#'+textboxIds[i]).data('custom-attribute');
+          let inpid = $('#'+textboxIds[i]).data('custom-attribute2');
+          let vals = $('#'+textboxIds[i]).val();
+          console.log(opeid);
+          console.log(inpid);
+          console.log(vals);
+          var data = $flowchart.flowchart('getData');
+          data['operators'][opeid]['properties']['outputs'][inpid]['label'] = vals;
+          $flowchart.flowchart('setData', data);          
+        }
+        console.log(textboxIds);
+      });      
+      $(document).on('change', '#dynamic_field_table_output', function() {
+        var textboxIds = $('#dynamic_field_table_output').find('input[type="color"]').map(function() {
+          return this.id;
+        }).get();
+        for(i=0;i<textboxIds.length;i++){
+          let opeid = $('#'+textboxIds[i]).data('custom-attributes');
+          let inpid = $('#'+textboxIds[i]).data('custom-attribute2s');
+          let vals = $('#'+textboxIds[i]).val();
+          console.log(opeid);
+          console.log(inpid);
+          console.log(vals);
+          var data = $flowchart.flowchart('getData');
+          data['operators'][opeid]['properties']['outputs'][inpid]['fontcolor'] = vals;
+          $flowchart.flowchart('setData', data);          
+        }
+        console.log(textboxIds);
+      });      
+      $(document).on('change', '#dynamic_field_table_output', function() {
+        var textboxIds = $('#dynamic_field_table_output').find('select').map(function() {
+          return this.id;
+        }).get();
+        for(i=0;i<textboxIds.length;i++){
+          let opeid = $('#'+textboxIds[i]).data('custom-attributes');
+          let inpid = $('#'+textboxIds[i]).data('custom-attribute2s');
+          let vals = $('#'+textboxIds[i]).val();
+          console.log(opeid);
+          console.log(inpid);
+          console.log(vals);
+          var data = $flowchart.flowchart('getData');
+          data['operators'][opeid]['properties']['outputs'][inpid]['alignment'] = vals;
+          $flowchart.flowchart('setData', data);          
+        }
+        console.log(textboxIds);
+      });      
+
       $operatorTitle.keyup(function() {
         var selectedOperatorId = $flowchart.flowchart('getSelectedOperatorId');
         if (selectedOperatorId != null) {
           $flowchart.flowchart('setOperatorTitle', selectedOperatorId, $operatorTitle.val());
         }
       });
+      $operatorAlignment.change(function() {
+        var selectedOperatorAlignment = $flowchart.flowchart('getSelectedOperatorId');
+        if (selectedOperatorAlignment != null) {
+          $flowchart.flowchart('setOperatorAlignment', selectedOperatorAlignment, $operatorAlignment.val());
+        }
+      });      
   
       $linkColor.change(function() {
         var selectedLinkId = $flowchart.flowchart('getSelectedLinkId');
@@ -157,7 +434,15 @@
         if (selectedOperatorBackground != null) {
           $flowchart.flowchart('setOperatorBackground', selectedOperatorBackground, $operatorBackgroundColor.val());
         }
-      });      
+      });            
+      $operatorFontColor.change(function() {
+        var selectedOperatorFontColor = $flowchart.flowchart('getSelectedOperatorId');
+        if (selectedOperatorFontColor != null) {
+          $flowchart.flowchart('setOperatorFontColor', selectedOperatorFontColor, $operatorFontColor.val());
+        }
+      });                  
+
+      
       //--- end
       //--- operator and link properties
       //-----------------------------------------
@@ -179,50 +464,125 @@
       //--- start
       var operatorI = 0;
       $flowchart.parent().siblings('.create_operator').click(function() {
+        console.log("called");
+        console.log(i);
+        console.log(j);
+        let title = $('#operator_title_add').val();
+        console.log(title);
+        console.log("title end");
         var operatorId = 'created_operator_' + operatorI;
+        const inputs = {};
+        for (let k = 1; k <= i; k++) {
+          const key = "input_" + k;
+          if($("#input_" + k).val() == '' || $("#input_" + k).val() == undefined || $("#input_" + k).val() == null){
+
+          }
+          else{
+            inputs[key] = {
+            label: $("#input_" + k).val(),
+            fontcolor : $("#input_fontcolor_" + k).val(),
+            alignment : $("#input_alignment_" + k).val(),
+          };
+          }
+        }
+        console.log("input comes here");
+        console.log(inputs);        
+        const outputs = {};
+        for (let l = 1; l <= j; l++) {
+          const keys = "output_" + l;
+          if($("#output_" + l).val() == '' || $("#output_" + l).val() == undefined || $("#output_" + l).val() == null){
+
+          }
+          else{
+            outputs[keys] = {
+            label: $("#output_" + l).val(),
+            fontcolor : $("#output_fontcolor_" + l).val(),
+            alignment : $("#output_alignment_" + l).val(),            
+          };
+          }          
+        }        
         var operatorData = {
           top: ($flowchart.height() / 2) - 30,
           left: ($flowchart.width() / 2) - 100 + (operatorI * 10),
           properties: {
-            title: 'Operator ' + (operatorI + 3),
-            backgrondColor : "#076afe",
-            fontColor : "black",            
-            inputs: {
-              input_1: {
-                label: 'Reference site about Lorem Ipsum.',
-              },
-              input_2: {
-                label: 'Reference site about Lorem Ipsum.',
-              },
-              input_3: {
-                label: 'Reference site about Lorem Ipsum.',
-              },
-              input_4: {
-                label: 'Reference site about Lorem Ipsum.',
-              },                            
-            },
-            outputs: {
-              output_1: {
-                label: 'Reference site about Lorem Ipsum.',
-              },
-              output_2: {
-                label: 'Reference site about Lorem Ipsum.',
-              },              
-              output_3: {
-                label: 'Reference site about Lorem Ipsum.',
-              },
-              output_4: {
-                label: 'Reference site about Lorem Ipsum.',
-              },                            
-            }
+            title: title,
+            backgrondColor : $('#background-color-add').val(),
+            align : $('#alignment-add').val(),
+            fontColor : $('#font-color-add').val(),            
+            inputs,
+            outputs,
           }
         };
-  
+        console.log(operatorData);  
         operatorI++;
   
         $flowchart.flowchart('createOperator', operatorId, operatorData);
-  
+//        var data = $flowchart.flowchart('getData');
+//        console.log(data);
+//        treeview(data);
       });
+      
+      $('#operator_update').click(function(){       
+        var data = $flowchart.flowchart('getDataRef');
+        console.log(data);        
+        console.log(input_update);
+        console.log(output_update);        
+      });      
+      function treeview(data){
+          $('#project_tree_tag').html('');                  
+        let html = '';
+        let inc = 0;
+        let dec = 999;
+        for(let key in data['operators']) {
+          console.log("keys");
+          console.log(key);
+          html += '<ul>';
+          html += '<li data-bs-toggle="collapse" type="button" data-bs-toggle="collapse" data-bs-target="#' + key + inc + '" aria-expanded="false" aria-controls="' + key + inc + '">';
+          html += '<span><i class="fa fa-folder"></i> </span> <a>' + data['operators'][key]['properties']['title'] + '</a>';
+          html += '<ul id="' + key + inc + '">';
+          html += '<li data-bs-toggle="collapse" type="button" data-bs-toggle="collapse" data-bs-target="#' + key + dec + '" aria-expanded="false" aria-controls="' + key + dec + '">';
+          html += '<span><i class="fa fa-folder"></i></span> <a>Inputs</a>';
+          html += '<ul id="' + key + dec + '">';
+
+          for(let inputs in data['operators'][key]['properties']['inputs']) {
+            html += '<li>';
+            html += '<span><i class="fa fa-folder"></i></span> <a>' + data['operators'][key]['properties']['inputs'][inputs]['label'] + '</a>';
+            html += '</li>';
+          }          
+
+          html += '</ul>';
+          html += '</li>';
+          html += '<li>';
+          html += '<span><i class="fa fa-folder"></i></span> <a>Outputs</a>';
+          html += '<ul>';
+
+          for(let outputs in data['operators'][key]['properties']['outputs']) {
+            html += '<li>';
+            html += '<span><i class="fa fa-folder"></i></span> <a>' + data['operators'][key]['properties']['outputs'][outputs]['label'] + '</a>';
+            html += '</li>';
+          }          
+
+          html += '</ul>';
+          html += '</li>';                                
+          html += '</ul>';
+          html += '</li>';
+          html += '</ul>';
+          inc++;
+          dec--;
+        }
+          $('#project_tree_tag').html(html);          
+//          $('#project_interface_tag').html(html);
+
+      }
+      function getDeatils(operatorid){
+        var alldatas = $flowchart.flowchart('getData');
+        console.log(";;;;;;;;;;;;;;;;;;;;")
+        console.log(alldatas);        
+        console.log(operatorid);
+        console.log(";;;;;;;;;;;;;;;;;;;;")
+        return operatorid;        
+//        return alldatas['operators'][fromOperator]['properties']['title'];;
+      }
       //--- end
       //--- create operator button
       //-----------------------------------------
@@ -269,7 +629,7 @@
             var data = getOperatorData($this);
             data.left = relativeLeft;
             data.top = relativeTop;
-  
+            
             $flowchart.flowchart('addOperator', data);
           }
         }
@@ -323,66 +683,32 @@
       //--- end
       //--- save and load
       //-----------------------------------------
-  
-  
+      $('#title_submit').click(function() {
+        if($('#project_title').val() != ''){
+        var defaultFlowchartData = {
+          project : $('#project_title').val(),
+        };
+        $('#project_name_tag').hide();
+        $('#project_name_tags').show();        
+        document.getElementById('project_name_title').innerText = $('#project_title').val();
+        $('#project_operator_tag').show();
+        $('#project_tree_tag').show();
+        $('#folder_structure').show();
+        document.getElementById('project_name_href').innerText = $('#project_title').val();
+        $flowchart.flowchart({
+          data: defaultFlowchartData,
+          defaultSelectedLinkColor: '#000055',
+          grid: 10,
+          multipleLinksOnInput: true,
+          multipleLinksOnOutput: true
+        });
+        $('#exampleModal').modal('hide');          
+        }
+        else{
+          alert('title required');
+        }
+      });                
     });
-  
-    var defaultFlowchartData = {
-      operators: {
-        operator1: {
-          top: 20,
-          left: 20,
-          properties: {
-            title: 'Operator 1',
-            backgrondColor : "#e91b1b",
-            fontColor : "black",
-            inputs: {},
-            outputs: {
-              output_1: {
-                label: 'Output 1',
-              }
-            }
-          }
-        },
-        operator2: {
-          top: 80,
-          left: 300,
-          properties: {
-            title: 'Operator 2',
-            backgrondColor : "#e91b1b",
-            fontColor : "black",            
-            inputs: {
-              input_1: {
-                label: 'Reference site about Lorem Ipsum.',
-              },
-              input_2: {
-                label: 'Reference site about Lorem Ipsum.',
-              },
-            },
-            outputs: {
-              output_1: {
-                label: 'Reference site about Lorem Ipsum.',
-              },
-              output_2: {
-                label: 'Reference site about Lorem Ipsum.',
-              },              
-            }
-          }
-        },
-      },
-      links: {
-        link_1: {
-          fromOperator: 'operator1',
-          fromConnector: 'output_1',
-          toOperator: 'operator2',
-          toConnector: 'input_2',
-          toLinkWidth : "10",
-        },
-      }
-    };
-    if (false){
-      console.log('remove lint unused warning', defaultFlowchartData);  
-    } 
     </script>    
   </body>
 </html>

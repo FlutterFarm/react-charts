@@ -23,8 +23,8 @@ jQuery(function ($) {
             defaultSelectedLinkColor: 'black',
             linkWidth: 10,
             grid: 20,
-            multipleLinksOnOutput: false,
-            multipleLinksOnInput: false,
+            multipleLinksOnOutput: true,
+            multipleLinksOnInput: true,
             linkVerticalDecal: 0,
             verticalConnection: false,
             onOperatorSelect: function (operatorId) {
@@ -548,18 +548,19 @@ jQuery(function ($) {
             var $operator = $('<div class="flowchart-operator"></div>');
             $operator.addClass(infos.class);
             var $operator_background_color = infos.backgrondColor;
+            var $operator_alignment = infos.align;
+            var $operator_fontColor = infos.fontColor;
 //            $operator_background_color.css('background-color', infos.backgrondColor);
-            var $operator_title = $('<div class="flowchart-operator-title" id=' + this.operatorId + '></div>').css('background-color', $operator_background_color);
+            var $operator_title = $('<div class="flowchart-operator-title" id=' + this.operatorId + '></div>').css('background-color', $operator_background_color).css('text-align',$operator_alignment).css('color',$operator_fontColor);
             $operator_title.html(infos.title);
             $operator_title.appendTo($operator);
-
             var $operator_body = $('<div class="flowchart-operator-body"></div>');
             $operator_body.html(infos.body);
             if (infos.body) {
                 $operator_body.appendTo($operator);
             }
-
-            var $operator_inputs_outputs = $('<div class="flowchart-operator-inputs-outputs"></div>');
+            var $bodyBackground =  this._shadeColor($operator_background_color, -0.4);
+            var $operator_inputs_outputs = $('<div class="flowchart-operator-inputs-outputs" id=background' + this.operatorId + '></div>').css('background-color',$bodyBackground);
 
             var $operator_inputs = $('<div class="flowchart-operator-inputs"></div>');
 
@@ -585,6 +586,8 @@ jQuery(function ($) {
                 operator: $operator,
                 title: $operator_title,
                 backgroundColor : $operator_background_color, 
+                align : $operator_alignment,
+                fontColor : $operator_fontColor,
                 body: $operator_body,
                 connectorSets: connectorSets,
                 connectors: connectors,
@@ -634,18 +637,19 @@ jQuery(function ($) {
             var $operator = $('<div class="flowchart-operator"></div>');
             $operator.addClass(infos.class);
             var $operator_background_color = infos.backgrondColor;
+            var $operator_alignment = infos.align;            
+            var $operator_fontColor = infos.fontColor;            
 //            $operator_background_color.css('background-color', infos.backgrondColor);
-            var $operator_title = $('<div class="flowchart-operator-title" id=' + operatorId + '></div>').css('background-color', $operator_background_color);
+            var $operator_title = $('<div class="flowchart-operator-title" id=' + operatorId + '></div>').css('background-color', $operator_background_color).css('text-align',$operator_alignment).css('color',$operator_fontColor);
             $operator_title.html(infos.title);
             $operator_title.appendTo($operator);
-
             var $operator_body = $('<div class="flowchart-operator-body"></div>');
             $operator_body.html(infos.body);
             if (infos.body) {
                 $operator_body.appendTo($operator);
             }
-
-            var $operator_inputs_outputs = $('<div class="flowchart-operator-inputs-outputs"></div>');
+            var $bodyBackground =  this._shadeColor($operator_background_color, -0.4);
+            var $operator_inputs_outputs = $('<div class="flowchart-operator-inputs-outputs" id=background' + operatorId + '></div>').css('background-color',$bodyBackground);
 
             var $operator_inputs = $('<div class="flowchart-operator-inputs"></div>');
 
@@ -671,6 +675,8 @@ jQuery(function ($) {
                 operator: $operator,
                 title: $operator_title,
                 backgroundColor : $operator_background_color, 
+                align : $operator_alignment,
+                fontColor : $operator_fontColor,                
                 body: $operator_body,
                 connectorSets: connectorSets,
                 connectors: connectors,
@@ -724,6 +730,8 @@ jQuery(function ($) {
 
             var $operator_connector_label = $('<div class="flowchart-operator-connector-label"></div>');
             $operator_connector_label.text(connectorInfos.label.replace('(:i)', subConnector + 1));
+            $operator_connector_label.css('color',connectorInfos.fontcolor);
+            $operator_connector_label.css('text-align',connectorInfos.alignment);
             $operator_connector_label.appendTo($operator_connector);
 
             var $operator_connector_arrow = $('<div class="flowchart-operator-connector-arrow"></div>');
@@ -877,7 +885,7 @@ jQuery(function ($) {
                     toOperator: operator,
                     toConnector: connector,
                     toSubConnector: subConnector,
-                    toLinkWidth : "10",
+                    toLinkWidth : "4",
                 };
 
                 this.addLink(linkData);
@@ -1200,9 +1208,20 @@ jQuery(function ($) {
             this._refreshInternalProperties(this.data.operators[operatorId]);
             this.callbackEvent('afterChange', ['operator_title_change']);
         },
+        setOperatorAlignment: function (operatorId, title) {
+            $("#" + operatorId).css('text-align',title);            
+            if (typeof this.data.operators[operatorId].properties == 'undefined') {
+                this.data.operators[operatorId].properties = {};
+            }
+            this.data.operators[operatorId].properties.align = title;
+            this._refreshInternalProperties(this.data.operators[operatorId]);
+            this.callbackEvent('afterChange', ['operator_title_change']);
+        },        
         setOperatorBackground: function (operatorId, title) {
             console.log("backgro");
             $("#" + operatorId).css('background-color',title);
+            var $bodyBackgroundchange =  this._shadeColor(title, -0.4);            
+            $('#background'+operatorId).css('background-color',$bodyBackgroundchange);
             console.log(this.data.operators[operatorId].internal.els.backgroundColor);
             this.data.operators[operatorId].internal.els.backgroundColor = title;
             if (typeof this.data.operators[operatorId].properties == 'undefined') {
@@ -1212,6 +1231,18 @@ jQuery(function ($) {
             this._refreshInternalProperties(this.data.operators[operatorId]);
             this.callbackEvent('afterChange', ['operator_title_change']);
         },        
+        setOperatorFontColor: function (operatorId, title) {
+            console.log("fontcolor");
+            $("#" + operatorId).css('color',title);
+            console.log(this.data.operators[operatorId].internal.els.fontColor);
+            this.data.operators[operatorId].internal.els.fontColor = title;
+            if (typeof this.data.operators[operatorId].properties == 'undefined') {
+                this.data.operators[operatorId].properties = {};
+            }
+            this.data.operators[operatorId].properties.fontColor = title;
+            this._refreshInternalProperties(this.data.operators[operatorId]);
+            this.callbackEvent('afterChange', ['operator_title_change']);
+        },                
 
         setOperatorBody: function (operatorId, body) {
             this.data.operators[operatorId].internal.els.body.html(body);
@@ -1231,6 +1262,16 @@ jQuery(function ($) {
             console.log(this.data.operators[operatorId].internal.properties.backgrondColor);
             return this.data.operators[operatorId].internal.properties.backgrondColor;
         },
+        getOperatorAlignment: function (operatorId) {
+            console.log("onclick alignment");
+            console.log(this.data.operators[operatorId].internal.properties.align);
+            return this.data.operators[operatorId].internal.properties.align;
+        },        
+        getOperatorFontColor: function (operatorId) {
+            console.log("onclick fontcolor");
+            console.log(this.data.operators[operatorId].internal.properties.fontColor);
+            return this.data.operators[operatorId].internal.properties.fontColor;
+        },        
         getOperatorBody: function (operatorId) {
             return this.data.operators[operatorId].internal.properties.body;
         },

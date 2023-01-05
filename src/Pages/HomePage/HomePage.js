@@ -40,6 +40,7 @@ const HomePage = () => {
   let [nestedData, setNestedData] = useState([]);
   let [treeData, setTreeData] = useState([]);
   let [modalDisplay, setmModalDisplay] = useState(false);    
+  let [type,setType] = useState('');
   const [isCheckedStack, setIsCheckedStack] = useState(false);
   const [isCheckedHorizontalBar, setIsCheckedHorizontalBar]  = useState(false);
   const [isCheckedVerticalBar, setIsCheckedVerticalBar]  = useState(false);  
@@ -149,27 +150,28 @@ const HomePage = () => {
       console.log(error);
   });    
   }
-  const showStackBar = () => {
+  const showStackBar = (type) => {
+    setType(type);
     setmModalDisplay(true);
   }
   useEffect(() => {
     onTop();
-    fetchData();
+//    fetchData();
   }, []);
   return (
     <React.Fragment>
         <div id="wrapper">
           <Navbar name="HomePage"></Navbar>
             <section id="content-wrapper">
-              <div className="row justify-content-between align-items-center">
+{/*              <div className="row justify-content-between align-items-center">
                 <div className="col flex-shrink-0 mb-5 mb-md-0">
                     <h1 className="display-4 mb-0">Dashboard</h1>
                     <div className="text-muted">Sales overview &amp; summary</div>
                 </div>
               </div>              
-              <WhatsTodaySection data={whatsToday}></WhatsTodaySection>
+              <WhatsTodaySection data={whatsToday}></WhatsTodaySection> */}
               <div className="row">
-                <div className="col-lg-4">
+{ /*                <div className="col-lg-4">
                   <div className="card card-raised chartpadding">
                     <div className="card-header bg-transparent">
                       <div className="d-flex justify-content-between align-items-center">
@@ -260,8 +262,48 @@ const HomePage = () => {
                       <></>
                     )
                   }                                                                  
-{/*}                  <ProgressBarSection data={progressBar}></ProgressBarSection> */}
+                  <ProgressBarSection data={progressBar}></ProgressBarSection> 
+                </div>  */}
+                <div className="col-3">
+                  <div className="card">
+                    <div className="card-header bg-transparent">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div className="me-4 input-group mb-3" id="project_name_tag">
+                          <span className="fa-stack fa-lg">
+                            <i className="fa fa-circle fa-stack-2x"></i>
+                            <i className="fa fa-plus fa-stack-1x fa-inverse"></i>
+                          </span> 
+                          <p className="card-title">Add New Project</p>                      
+                        </div>
+                        <div className="me-4 input-group mb-3" id="project_name_tags" style={{"display": "none"}}>
+                          <p className="card-title" id="project_name_title"></p>                      
+                        </div>                        
+                        <div className="me-4 input-group mb-3" id="project_operator_tag" style={{"display": "none"}}>
+                          <span className="fa-stack fa-lg">
+                            <i className="fa fa-circle fa-stack-2x"></i>
+                            <i className="fa fa-plus fa-stack-1x fa-inverse"></i>
+                          </span> 
+                          <p className="card-title">Add Operator</p>                      
+                        </div>                        
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <div className="row gx-4">
+                        <div className="col-12">
+                          <div className="tree well" id="folder_structure" style={{"display": "none","overflowX":"hidden","overflowY":"scroll","height":"500px"}}>
+                          <ul>
+                              <li data-bs-toggle="collapse" type="button" data-bs-toggle="collapse" data-bs-target="#project_tree_tag" aria-expanded="false" aria-controls="project_tree_tag">
+                                <span><i className="fa fa-folder"></i> </span> <a id="project_name_href"></a>
+                                <div id="project_tree_tag"></div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>                  
+                  </div>
                 </div>
+                <div className="col-9">
                   <div id="chart_container">
                     <div className="flowchart-example-container" id="flowchartworkspace"></div>
                   </div>
@@ -271,14 +313,17 @@ const HomePage = () => {
                     <div className="draggable_operators_divs">
                     </div>
                   </div>
+                  <button className="create_operator btn btn-success create-button" style={{"display": "none"}}>Create operator</button>&nbsp;&nbsp;                  
+                	<button className="delete_selected_button btn btn-success create-button" style={{"display": "none"}}>Delete selected operator / link</button>&nbsp;&nbsp;                  
+                </div>
                   <div id="operator_properties" style={{"display": "block"}}>
-                    <label for="operator_title">Operator's title: <input className="form-control create-button" id="operator_title" type="text"/>
+{/*                    <label for="operator_title">Operator's title: <input className="form-control create-button" id="operator_title" type="text"/>
                     Background color: <input className="form-control create-button" id="operator_background_color" type="color"/>
-{/*                    Font color: <input className="form-control create-button" id="operator_font_color" type="color"/>  */}
-                    </label> 
+                    Font color: <input className="form-control create-button" id="operator_font_color" type="color"/>  
+                    </label> */}
                   </div>
                   <div id="link_properties" style={{"display": "block"}}>
-                    <label for="link_color">
+{/*                    <label for="link_color">
                         Link's color: <input className="form-control create-button" id="link_color" type="color"/>
                         Link width: <select className="form-control create-button" id="link_width">
                           <option value="1">1</option>
@@ -292,9 +337,9 @@ const HomePage = () => {
                           <option value="9">9</option>
                           <option value="10">10</option>                                                                                                                                                                                                                                          
                         </select>
-                    </label>
+                    </label>  */}
                   </div>
-                  <button className="create_operator btn btn-success create-button">Create operator</button>&nbsp;&nbsp;
+{/*                  <button className="create_operator btn btn-success create-button">Create operator</button>&nbsp;&nbsp;
                 	<button className="delete_selected_button btn btn-success create-button">Delete selected operator / link</button>&nbsp;&nbsp;
                   	<button className="get_data btn btn-success create-button" id="get_data">Get data</button>&nbsp;&nbsp;
                   	<button className="set_data btn btn-success create-button" id="set_data">Set data</button>&nbsp;&nbsp;
@@ -302,11 +347,11 @@ const HomePage = () => {
                   	<button id="load_local" className="btn btn-success create-button">Load from local storage</button>&nbsp;&nbsp;
                   	<div>
                   		<textarea id="flowchart_data" className="form-control create-button"></textarea>
-                  	</div>                      
+                  	</div>                      */}
 {/*                <ERD schema={TreeData} /> */}
-                <NestedTableSection data={nestedData}></NestedTableSection>
+{/*                <NestedTableSection data={nestedData}></NestedTableSection> */}
 
-                <TreeChartSection data={treeData}></TreeChartSection>
+{/*                <TreeChartSection data={treeData}></TreeChartSection> */}
 {/*                <PouchDB name="todoapp">
                   <Suspense fallback="loading...">
                     <Componente />
@@ -315,172 +360,159 @@ const HomePage = () => {
   </PouchDB>  */}                
               </div>
             </section>                        
-            <Modal size="md" show={modalDisplay} onHide={handleClose}>
-                <div className="row">
-                    <div className="col-12 text-end ">
-                        <button
-                        type="button"
-                        onClick={handleClose}
-                        className="text-secondary btn_close pe-4"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                        >
-                        <i className="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                </div>
-                <div className="pb-5">
-                  <div>
-                    <div className="row">
-                        <div className="col-12 text-center">
-                        <h4 className="get-apk-free">Choose charts </h4>
-                        <p className="input-text-mod">
-                            
-                        </p>
-                        </div>
-                    </div>
-                    <hr />
-                    <div className="row pt-4 px-5 form-ts-mod">
-                        <div className="col-md-4 col-6">
-                          <div className="custom-control custom-checkbox image-checkbox">
-                            <input className="custom-control-input"
-                                type="checkbox"
-                                name="HorizontalBar"
-                                value={"HorizontalBar"}
-                                checked={isCheckedHorizontalBar}
-                                id="HorizontalBar"
-                                onChange={(e) =>
-                                  setIsCheckedHorizontalBar(ValidateFunctions.validateField(e.target.value, "HorizontalBar", "isCheckedHorizontalBar",e.target.checked))
-                                }
-                            />
-                              <label className="custom-control-label" for="HorizontalBar">
-                                <img src="/assets/images/charts/Horizontal.png" style={{"height":"100px","width":"100px"}} alt="#" className="img-fluid"/>
-                              </label>
+            <div className="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog modal-lg">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">Project setup</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className="modal-body">
+                      <div className="row form-ts-mod" id="project_modal" style={{"display": "none"}}>
+                        <div className="col-md-12 col-12">
+                          <label>Enter project name</label>
+                          <input type="text" className="form-control" id="project_title"></input>
+                        </div><br></br>                                                                                                                                          
+                        <div className="col-md-12 col-12 text-center">
+                          <button id="title_submit" className="btn btn-success">Submit</button>
+                        </div>                                                                                                                 
+                      </div>
+                      <div className="row form-ts-mod" id="project_operator" style={{"display": "none"}}>
+                        <div className="row" id="add_operator_field">
+                          <div className="col-md-12 col-12">
+                            <label>Enter title</label>
+                            <input type="text" className="form-control" id="operator_title_add" placeholder="Operator title"></input>
+                          </div>          
+                          <div className="col-4">
+                            <label>Background</label>
+                            <input type="color" id="background-color-add" className="form-control"></input>
+                            <br></br>                              
                           </div>
-                        </div>                                                                                                                                          
-                        <div className="col-md-4 col-6">
-                          <div className="custom-control custom-checkbox image-checkbox">
-                            <input className="custom-control-input"
-                                type="checkbox"
-                                name="VerticalBar"
-                                value={"VerticalBar"}
-                                checked={isCheckedVerticalBar}
-                                id="VerticalBar"
-                                onChange={(e) =>
-                                  setIsCheckedVerticalBar(ValidateFunctions.validateField(e.target.value, "VerticalBar", "isCheckedVerticalBar",e.target.checked))
-                                }
-                            />
-                              <label className="custom-control-label" for="VerticalBar">
-                                <img src="/assets/images/charts/VerticalBar.png" style={{"height":"100px","width":"100px"}} alt="#" className="img-fluid"/>
-                              </label>
+                          <div className="col-4">
+                            <label>Alignment</label>
+                            <select id="alignment-add" className="form-control">
+                              <option value="center">Center</option>
+                              <option value="right">Right</option>
+                              <option value="left">Left</option>                                                        
+                            </select>                          
+                            <br></br>                              
                           </div>
-                        </div>     
-                        <div className="col-md-4 col-6">
-                          <div className="custom-control custom-checkbox image-checkbox">
-                            <input className="custom-control-input"
-                                type="checkbox"
-                                name="Pie"
-                                value={"Pie"}
-                                checked={isCheckedPie}
-                                id="Pie"
-                                onChange={(e) =>
-                                  setIsCheckedPie(ValidateFunctions.validateField(e.target.value, "Pie", "isCheckedPie",e.target.checked))
-                                }
-                            />
-                              <label className="custom-control-label" for="Pie">
-                                <img src="/assets/images/charts/Pie.png" style={{"height":"100px","width":"100px"}} alt="#" className="img-fluid"/>
-                              </label>
-                          </div>
-                        </div>                                                                                                                                                                                                                                                                                                                               
-                        <div className="col-md-4 col-6">
-                          <div className="custom-control custom-checkbox image-checkbox">
-                            <input className="custom-control-input"
-                                type="checkbox"
-                                name="Stacked"
-                                value={"Stacked"}
-                                checked={isCheckedStack}
-                                id="Stacked"
-                                onChange={(e) =>
-                                  setIsCheckedStack(ValidateFunctions.validateField(e.target.value, "Stacked", "isCheckedStack",e.target.checked))
-                                }
-                            />
-                              <label className="custom-control-label" for="Stacked">
-                                <img src="/assets/images/charts/Stacked.png" style={{"height":"100px","width":"100px"}} alt="#" className="img-fluid"/>
-                              </label>
-                          </div>
-                        </div>                                                                                                                      
-                        <div className="col-md-4 col-6">
-                          <div className="custom-control custom-checkbox image-checkbox">
-                            <input className="custom-control-input"
-                                type="checkbox"
-                                id="Donut"
-                                name="Donut"
-                                value={"Donut"}
-                                checked={isCheckedDonut}
-                                onChange={(e) =>
-                                  setIsCheckedDonut(ValidateFunctions.validateField(e.target.value, "Donut", "isCheckedDonut",e.target.checked))
-                                }        
-                            />
-                              <label className="custom-control-label" for="Donut">
-                                <img src="/assets/images/charts/Donut.png" style={{"height":"100px","width":"100px"}} alt="#" className="img-fluid"/>
-                              </label>
-                          </div>
+                          <div className="col-4">
+                            <label>Font color</label>
+                            <input type="color" id="font-color-add" className="form-control"></input>
+                            <br></br>                              
+                          </div>                  
                         </div>                        
-                        <div className="col-md-4 col-6">
-                          <div className="custom-control custom-checkbox image-checkbox">
-                            <input className="custom-control-input"
-                                type="checkbox"
-                                id="Line"
-                                name="Line"
-                                value={"Line"}
-                                checked={isCheckedLine}
-                                onChange={(e) =>
-                                  setIsCheckedLine(ValidateFunctions.validateField(e.target.value, "Line", "isCheckedLine",e.target.checked))
-                                }
-                            />
-                              <label className="custom-control-label" for="Line">
-                                <img src="/assets/images/charts/Line.png" style={{"height":"100px","width":"100px"}} alt="#" className="img-fluid"/>
-                              </label>
+                        <div className="row" id="update_operator_field" style={{"display":"none"}}>
+                          <div className="col-md-12 col-12">
+                            <label>Enter title</label>
+                            <input type="text" className="form-control" id="operator_title" placeholder="Operator title"></input>
+                          </div>          
+                          <div className="col-4">
+                            <label>Background</label>
+                            <input type="color" id="background-color" className="form-control"></input>
+                            <br></br>                              
                           </div>
-                        </div>                                                
-                        <div className="col-md-4 col-6">
-                          <div className="custom-control custom-checkbox image-checkbox">
-                            <input className="custom-control-input"
-                                type="checkbox"
-                                id="Polar"
-                                name="Polar"
-                                value={"Polar"}
-                                checked={isCheckedPolar}
-                                onChange={(e) =>
-                                  setIsCheckedPolar(ValidateFunctions.validateField(e.target.value, "Polar", "isCheckedPolar",e.target.checked))
-                                }
-                            />
-                              <label className="custom-control-label" for="Polar">
-                                <img src="/assets/images/charts/Polar.png" style={{"height":"100px","width":"100px"}} alt="#" className="img-fluid"/>
-                              </label>
+                          <div className="col-4">
+                            <label>Alignment</label>
+                            <select id="alignment" className="form-control">
+                              <option value="center">Center</option>
+                              <option value="right">Right</option>
+                              <option value="left">Left</option>                                                        
+                            </select>                          
+                            <br></br>                              
                           </div>
-                        </div>                                                                        
-                        <div className="col-md-4 col-6">
-                          <div className="custom-control custom-checkbox image-checkbox">
-                            <input className="custom-control-input"
-                                type="checkbox"
-                                id="Area"
-                                name="Area"
-                                value={"Area"}
-                                checked={isCheckedArea}
-                                onChange={(e) =>
-                                  setIsCheckedArea(ValidateFunctions.validateField(e.target.value, "Area", "isCheckedArea",e.target.checked))
-                                }
-                            />
-                              <label className="custom-control-label" for="Area">
-                                <img src="/assets/images/charts/Area.png" style={{"height":"100px","width":"100px"}} alt="#" className="img-fluid"/>
-                              </label>
-                          </div>
-                        </div>                                                                                                
+                          <div className="col-4">
+                            <label>Font color</label>
+                            <input type="color" id="font-color" className="form-control"></input>
+                            <br></br>                              
+                          </div>                  
+                        </div>
+                        <div className="col-6" id="dynamic_field_input_show">
+                          <div className="table-responsive">  
+                              <table className="table table-bordered" id="dynamic_field">  
+                                    <tr>  
+                                        <td><input type="text" name="input[]" id="input_1" placeholder="input" className="form-control name_list" /></td>  
+                                        <td><input type="color" name="input[]" id="input_fontcolor_1" placeholder="input" className="form-control name_list" /></td>                                          
+                                        <td>
+                                          <select id="input_alignment_1" className="form-control">
+                                            <option value="center">Center</option>
+                                            <option value="right">Right</option>
+                                            <option value="left">Left</option>                                                        
+                                          </select>                          
+                                        </td>
+                                        <td><button type="button" name="add" id="add" className="btn btn-success-color">+</button></td>  
+                                    </tr>  
+                              </table>  
+                          </div>                      
+                        </div>                                                                                                      
+                        <div className="col-6" id="dynamic_field_output_show">
+                          <div className="table-responsive">  
+                              <table className="table table-bordered" id="dynamic_field_output">  
+                                    <tr>  
+                                        <td><input type="text" name="output[]" id="output_1" placeholder="output" className="form-control name_list" /></td>  
+                                        <td><input type="color" name="output[]" id="output_fontcolor_1" placeholder="input" className="form-control name_list" /></td>                                          
+                                        <td>
+                                          <select id="output_alignment_1" className="form-control">
+                                            <option value="center">Center</option>
+                                            <option value="right">Right</option>
+                                            <option value="left">Left</option>                                                        
+                                          </select>                          
+                                        </td>                                        
+                                        <td><button type="button" name="add" id="addoutput" className="btn btn-success-color">+</button></td>  
+                                    </tr>  
+                              </table>  
+                          </div>                      
+                        </div>                                                                                                                        
+                        <div className="col-6" id="dynamic_field_input_hide" style={{"display":"none"}}>
+                          <div className="table-responsive">  
+                            <table className="table table-bordered" id="dynamic_field_table_input">  
+
+                              </table>  
+                          </div>                      
+                        </div>                                                                                                      
+                        <div className="col-6" id="dynamic_field_output_hide" style={{"display":"none"}}>
+                          <div className="table-responsive">  
+                            <table className="table table-bordered" id="dynamic_field_table_output">  
+                            </table>                            
+                          </div>                      
+                        </div>                                                                                                                                                
+                        <div className="col-md-12 col-12 text-center">
+                          <button id="operator_submit" className="btn btn-success" style={{"display":"block"}}>Submit</button>
+{/*                          <button id="operator_update" className="btn btn-success" style={{"display":"none"}}>Update</button>&nbsp;&nbsp; */}
+                          <button id="operator_delete" className="btn btn-danger" style={{"display":"none"}}>Delete this operator</button>                                                   
+                        </div>                                                                                                                 
+                      </div>                
+                      <div className="row form-ts-mod" id="project_link" style={{"display": "none"}}>
+                        <div className="col-6">
+                          <label>link Color</label>
+                          <input type="color" id="link_color" className="form-control"></input>
+                          <br></br>                              
+                        </div>
+                        <div className="col-6">
+                          <label>width</label>
+                          <select className="form-control create-button" id="link_width">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>                                                                                                                                                                                                                                          
+                          </select>                          
+                          <br></br>                              
+                        </div>
+                        <div className="col-md-12 col-12 text-center">
+                          <button id="link_delete" className="btn btn-danger">Delete this link</button>                                                   
+                        </div>                                                                                                                 
+                      </div>                                      
                     </div>
                   </div>
-                </div>    
-            </Modal>
+              </div>
+            </div>
         </div>
     </React.Fragment>
   );

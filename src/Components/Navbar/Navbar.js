@@ -35,9 +35,9 @@ function Navbar(props) {
                 <li className={homeActive}>
                     <a href="/"><img src="/assets/images/icons/home.svg"></img></a>
                 </li>
-                <li className={settingsActive}>
+{/*                <li className={settingsActive}>
                     <a href="/settings"><img src="/assets/images/icons/settings.svg"></img></a>
-                </li>                
+                </li>                */}
             </ul>
         </aside>
         <div id="navbar-wrapper">
